@@ -2,6 +2,7 @@ import { Schema, model } from "mongoose";
 
 const UploadSchema = new Schema({
   url: String,
+  typeOfFile: String,
 });
 
 UploadSchema.methods.toJSON = function () {
