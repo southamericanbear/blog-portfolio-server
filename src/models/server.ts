@@ -4,13 +4,14 @@ import { IApiPath } from "../interfaces/models/server";
 import { dbConnection } from "../db/config";
 import uploads from "../routes/uploads";
 import fileUpload from "express-fileupload";
-
+import auth from "../routes/auth";
 class Server {
   private app: Application;
   private port: string;
   private apiPath: IApiPath = {
     posts: "/api/posts",
     uploads: "/api/uploads",
+    auth: "/api/auth",
   };
 
   constructor() {
@@ -39,6 +40,7 @@ class Server {
 
   routes() {
     this.app.use(this.apiPath.uploads, uploads);
+    this.app.use(this.apiPath.auth, auth);
   }
 
   listen() {
