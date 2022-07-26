@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { cloudinaryUpload } from "../utils";
 import Upload from "../models/Uploads";
-import cloudinary from "cloudinary";
 
 interface IUploadRequest extends Request {
   files?: any;
