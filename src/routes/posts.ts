@@ -1,12 +1,14 @@
 import { Router } from "express";
 import { check } from "express-validator";
-import { createPost, getPosts } from "../controllers/posts";
+import { createPost, getPosts, getPostsByTag } from "../controllers/posts";
 import { validationFields } from "../middlewares/validationFields";
 import { validationJWT } from "../middlewares/validationJWT";
 
 const router = Router();
 
 router.get("/", [validationJWT], getPosts);
+
+router.get("/:tag", [validationJWT], getPostsByTag);
 
 router.post(
   "/",
