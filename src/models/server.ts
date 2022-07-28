@@ -2,9 +2,10 @@ import express, { Application } from "express";
 import cors from "cors";
 import { IApiPath } from "../interfaces/models/server";
 import { dbConnection } from "../db/config";
-import uploads from "../routes/uploads";
 import fileUpload from "express-fileupload";
 import auth from "../routes/auth";
+import uploads from "../routes/uploads";
+import posts from "../routes/posts";
 class Server {
   private app: Application;
   private port: string;
@@ -39,8 +40,9 @@ class Server {
   }
 
   routes() {
-    this.app.use(this.apiPath.uploads, uploads);
     this.app.use(this.apiPath.auth, auth);
+    this.app.use(this.apiPath.uploads, uploads);
+    this.app.use(this.apiPath.posts, posts);
   }
 
   listen() {
