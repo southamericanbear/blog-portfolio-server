@@ -27,6 +27,7 @@ export const validationJWT = async (
     console.log(error);
     res.status(401).json({
       msg: "Invalid token",
+      redirect: true,
     });
   }
 };

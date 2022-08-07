@@ -1,5 +1,6 @@
-import { login } from "../controllers/auth";
+import { login, revalidationToken } from "../controllers/auth";
 import { validationFields } from "../middlewares/validationFields";
+import { validationJWT } from "../middlewares/validationJWT";
 
 const { Router } = require("express");
 const { check } = require("express-validator");
@@ -15,5 +16,7 @@ router.post(
   ],
   login
 );
+
+router.post("/renew", [validationJWT], revalidationToken);
 
 export default router;
