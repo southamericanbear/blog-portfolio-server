@@ -1,34 +1,48 @@
 import express, { Application } from "express";
-
 import cors from "cors";
 import { IApiPath } from "../interfaces/models/server";
-
+import { dbConnection } from "../db/config";
+import fileUpload from "express-fileupload";
+import auth from "../routes/auth";
+import uploads from "../routes/uploads";
+import posts from "../routes/posts";
 class Server {
   private app: Application;
   private port: string;
   private apiPath: IApiPath = {
     posts: "/api/posts",
+    uploads: "/api/uploads",
+    auth: "/api/auth",
   };
 
   constructor() {
     this.app = express();
     this.port = process.env.PORT || "1990";
-    this.dbConnection();
+    this.dbConnect();
     this.middlewares();
     this.routes();
   }
 
-  async dbConnection() {}
-
   middlewares() {
     this.app.use(cors());
     this.app.use(express.json());
+    this.app.use(
+      fileUpload({
+        useTempFiles: true,
+        tempFileDir: "/tmp/",
+        createParentPath: true,
+      })
+    );
+  }
+
+  async dbConnect() {
+    await dbConnection();
   }
 
   routes() {
-    this.app.get(this.apiPath.posts, (req, res) => {
-      res.send("Hello World");
-    });
+    this.app.use(this.apiPath.auth, auth);
+    this.app.use(this.apiPath.uploads, uploads);
+    this.app.use(this.apiPath.posts, posts);
   }
 
   listen() {
