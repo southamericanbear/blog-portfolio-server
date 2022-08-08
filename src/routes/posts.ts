@@ -6,9 +6,9 @@ import { validationJWT } from "../middlewares/validationJWT";
 
 const router = Router();
 
-router.get("/", [validationJWT], getPosts);
+router.get("/", getPosts);
 
-router.get("/:tag", [validationJWT], getPostsByTag);
+router.get("/:tag", getPostsByTag);
 
 router.post(
   "/",
