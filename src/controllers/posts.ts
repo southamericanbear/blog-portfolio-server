@@ -3,7 +3,16 @@ import Post from "../models/Post";
 
 export const getPosts = async (req: Request, res: Response) => {
   try {
-    const posts = await Post.find();
+    const postsRaw = await Post.find();
+    const posts = postsRaw.map((post) => {
+      return {
+        uid: post.id,
+        title: post.title,
+        author: post.author,
+        date: post.date,
+      };
+    });
+
     res.status(200).json({
       status: "success",
       ok: true,
